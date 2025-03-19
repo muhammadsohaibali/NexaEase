@@ -21,7 +21,7 @@ app.use(cors({ origin: `${process.env.SERVER_ADDRESS}:${process.env.PORT}`, cred
 app.use(
   session({
     secret: process.env.SECRET_COOKIE_KEY,
-    resave: false,
+    resave: false, 
     saveUninitialized: true,
     cookie: { maxAge: 30 * 24 * 60 * 60 * 1000 },
   })

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Profile Settings</title>
+
+    <link rel="icon" href="/auth/assets/imgs/nexa-ease-symbol.png">
+
+    <link rel="stylesheet" href="/auth/assets/css/root.css" />
+    <link rel="stylesheet" href="/auth/assets/css/notifier.css">
+    <link rel="stylesheet" href="/auth/assets/css/myprofile.css">
+    <link rel="stylesheet" href="/auth/assets/css/waveLoader.css">
+
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+</head>
+
+<body id="body">
+    <!-- Loader -->
+    <div id="loading-overlay">
+        <span class="loader-text">
+            <span style="color: #faa24a">Nexa</span><span style="color: #30a6d0;">Ease</span>
+        </span>
+        <div class="dots-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    <!--  -->
+
+    <div id="popupNotification"></div>
+
+    <nav class="cart-navbar">
+        <div class="navbar-container" style="width: 70%; margin-left: auto; margin-right: auto">
+            <div class="logo-wrapper">
+                <a href="/">
+                    <img class="logo-image" src="/auth/assets/imgs/nexa-ease-logo-transparent.png" alt="NexaEase" />
+                </a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/" class="nav-button">Home</a>
+                <a onclick="toCont()" style="cursor: pointer;" class="nav-button">Contact</a>
+                <script>
+                    const toCont = () => { sessionStorage.setItem('scrl', 'true'); window.location.href = '/'; }
+                </script>
+                <a href="/about" class="nav-button">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-auth" id="container-auth">
+        
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 50px">
+        <div class="footer-container">
+            <!-- Left Section - About Us -->
+            <div class="footer-about">
+                <h3>About NexaEase</h3>
+                <p>
+                    NexaEase is your trusted partner for tech gadgets, proudly serving
+                    all of Pakistan. Our mission is to bring the latest tech right to
+                    your doorstep, offering products that elevate your lifestyle.
+                </p>
+                <p>
+                    <strong>Note: NexaEase does not own the products, but sources and
+                        delivers them upon request.</strong>
+                </p>
+            </div>
+            <!-- Right Section - Follow Us -->
+            <div class="footer-follow" style="margin-bottom: 30px">
+                <h3>Follow Us</h3>
+                <p>
+                    Stay connected through our social media for updates and exclusive
+                    offers:
+                </p>
+                <ul class="footer-social">
+                    <li>
+                        <a href="https://wa.me/923324819987" target="_blank"><i class="bx bxl-whatsapp"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/nexa.ease" target="_blank"><i class="bx bxl-instagram"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/profile.php?id=61565360957622" target="_blank"><i
+                                class="bx bxl-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="mailto:nexaease@gmail.com"><i class="bx bxl-gmail"></i></a>
+                    </li>
+                </ul>
+                <div style="
+              display: flex;
+              flex-direction: row;
+              gap: 15px;
+              text-decoration: none;
+              color: white;
+            ">
+                    <h5>
+                        <a onclick="toCont()" style="text-decoration: none; color: white; font-size: 14px">Contact Us</a>
+                    </h5>
+                    <h5>
+                        <a href="/about" style="text-decoration: none; color: white; font-size: 14px">About Us</a>
+                    </h5>
+                </div>
+            </div>
+        </div>
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 NexaEase. All rights reserved.</p>
+        </div>
+    </footer>
+    <!--  -->
+
+    <script src="/auth/assets/js/notifier.js"></script>
+    <script src="/auth/assets/js/templates.js"></script>
+    <script src="/auth/assets/js/myprofile.js"></script>
+</body>
+
+</html>

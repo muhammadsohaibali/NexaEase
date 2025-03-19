@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/public/css/waveLoader.css">
+    <link rel="stylesheet" href="/assets/public/css/notifier.css">
+    <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+    <link rel="stylesheet" href="/assets/public/css/productpage.css">
+    <title>NexaEase - Product Page</title>
+</head>
+
+
+<body>
+    <!-- Loader -->
+    <div id="loading-overlay">
+        <span class="loader-text">
+            <span style="color: #faa24a">Nexa</span><span style="color: #30a6d0;">Ease</span>
+        </span>
+        <div class="dots-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    <!--  -->
+    <div id="notify"></div>
+    <nav class="cart-navbar" id="id-to-scroll">
+        <div class="navbar-container" style="width: 70%;margin-left: auto;margin-right: auto;">
+            <div class="logo-wrapper">
+                <a href="/"><img class="logo-image" src="/assets/public/imgs/nexa-ease-logo-transparent.png"
+                        alt="NexaEase"></a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/cart" class="cart-icon">
+                    <i class='bx bx-sm bx-shopping-bag cart-btn'></i>
+                    <span class="cart-notification-dot">
+                        <div class="cart-quantity" id="cart-quantity">0</div>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div id="main-section" class="main-section"></div>
+
+    </div>
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 50px;">
+        <div class="footer-container">
+
+            <!-- Left Section - About Us -->
+            <div class="footer-about">
+                <h3>About NexaEase</h3>
+                <p>
+                    NexaEase is your trusted partner for tech gadgets, proudly serving all of Pakistan. Our mission
+                    is
+                    to bring the latest tech right to your doorstep, offering products that elevate your lifestyle.
+                </p>
+                <p><strong>Note: NexaEase does not own the products, but sources and delivers them upon
+                        request.</strong></p>
+            </div>
+
+            <!-- Right Section - Follow Us -->
+            <div class="footer-follow">
+                <h3>Follow Us</h3>
+                <p>Stay connected through our social media for updates and exclusive offers:</p>
+                <ul class="footer-social">
+                    <li><a href="https://wa.me/923324819987" target="_blank"><i class='bx bxl-whatsapp'></i></a>
+                    </li>
+                    <li><a href="https://instagram.com/nexa.ease" target="_blank"><i class='bx bxl-instagram'></i></a>
+                    </li>
+                    <li><a href="https://www.facebook.com/profile.php?id=61565360957622" target="_blank"><i
+                                class='bx bxl-facebook'></i></a></li>
+                    <li><a href="mailto:nexaease@gmail.com"><i class='bx bxl-gmail'></i></a></li>
+                </ul>
+                <div style="display: flex; flex-direction: row; gap: 15px;">
+                    <h5><a onclick="toCont()">Contact Us</a></h5>
+                    <script>
+                        const toCont = () => { sessionStorage.setItem('scrl', 'true'); window.location.href = '/'; }
+                    </script>
+                    <h5><a href="/about">About Us</a></h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 NexaEase. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!--  -->
+    <script src="/assets/public/js/notifier.js"></script>
+    <script src="/assets/public/js/productpage.js"></script>
+
+</body>
+
+</html>

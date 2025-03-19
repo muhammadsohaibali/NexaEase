@@ -1,0 +1,44 @@
+#notify {
+    display: none;
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background-color: #ff8e31;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 3px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    z-index: 1000;
+    font-size: 16px;
+    font-weight: bold;
+    font-family: 'Arial', sans-serif;
+    animation: slideIn 0.5s, fadeOut 0.5s 2.5s;
+    transition: transform 0.3s ease;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(0);
+    }
+}
+
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+@media (max-width: 768px) {
+    #notify {
+        bottom: 15px;
+        right: 15px;
+        font-size: 14px;
+        padding: 10px 15px;
+    }
+}

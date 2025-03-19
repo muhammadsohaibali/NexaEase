@@ -1,0 +1,97 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: sans-serif;
+  background-color: rgb(221, 221, 221);
+}
+
+h1,
+a {
+  margin: 0;
+  padding: 0;
+  text-decoration: none;
+}
+
+h1:hover {
+  transform: scale(1.05);
+}
+
+.container-404 {
+  width: 70%;
+  padding: 80px 30px;
+  background-color: rgb(255, 255, 255);
+  margin: 60px auto;
+}
+
+.section {
+  padding: 4rem 2rem;
+}
+
+.section .error {
+  font-size: 150px;
+  color: #008b62;
+  width: fit-content;
+  margin: 0px auto;
+  text-shadow: 1px 1px 1px #00593e, 2px 2px 1px #00593e, 3px 3px 1px #00593e,
+    4px 4px 1px #00593e, 5px 5px 1px #00593e, 6px 6px 1px #00593e,
+    7px 7px 1px #00593e, 8px 8px 1px #00593e, 25px 25px 8px rgba(0, 0, 0, 0.2);
+}
+
+.page {
+  margin: 2rem 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #444;
+}
+
+.back-home {
+  display: inline-block;
+  border: 2px solid #008b62;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 0.75rem 1rem 0.6rem;
+  transition: all 0.1s linear;
+  box-shadow: 0 15px 15px -11px rgba(0, 0, 0, 0.4);
+  background: #008b62;
+  border-radius: 6px;
+}
+
+.back-home:hover {
+  border: 2px solid #008b62;
+  background: #ffffff;
+  color: #008b62;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .container-404 {
+    width: 80%;
+    padding: 40px 20px;
+    margin: 30px auto;
+  }
+
+  .section {
+    padding: 2rem 1rem;
+  }
+
+  .section .error {
+    font-size: 90px;
+  }
+
+  .page {
+    font-size: 15px;
+  }
+
+  .back-home {
+    padding: 0.6rem 0.8rem 0.5rem;
+  }
+
+  .back-home:hover {
+    border: 2px solid #008b62;
+    background: #008b62;
+    color: #ffffff;
+  }
+}

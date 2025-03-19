@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <!-- External Libraries -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Local Assets -->
+    <link rel="stylesheet" href="/assets/public/css/waveLoader.css">
+    <link rel="stylesheet" href="/assets/public/css/notifier.css">
+    <link rel="stylesheet" href="/assets/public/css/index.css">
+    <link rel="stylesheet" href="/assets/public/css/contactUs.css">
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+
+    <title>NexaEase - Tech At Your Fingertips</title>
+</head>
+
+
+<body>
+    <!-- Loader -->
+    <div id="loading-overlay">
+        <span class="loader-text">
+            <span style="color: #faa24a">Nexa</span><span style="color: #30a6d0;">Ease</span>
+        </span>
+        <div class="dots-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    <!--  -->
+
+    <!-- Body -->
+    <div id="notify"></div>
+
+    <!-- Navbar -->
+    <div class="slogan-span">
+        <div class="loader">
+            <p style="margin-right: 5px;">CHOOSE YOUR</p>
+            <div class="words">
+                <span class="word">AIRBUDS</span>
+                <span class="word">WATCHES</span>
+                <span class="word">HEADPHONES</span>
+                <span class="word">TECH GADGETS</span>
+                <span class="word">AIRBUDS</span>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <div class="navbar-div">
+            <div onclick="window.location.reload()" class="nav-item icon-logo"><img class="logo-img"
+                    src="/assets/public/imgs/nexa-ease-logo-transparent.png" alt="NexaEase">
+            </div>
+            <div class="nav-item" style="width: 20%;"></div>
+            <div class="nav-item search-n-cart">
+                <div style="margin-right: 0px; margin-left: auto;" class="srch-desktop nav-buttons form">
+                    <input autocomplete="off" class="input" id="srchbx" placeholder="Search" required="" type="text"
+                        maxlength="22">
+                    <span class="input-border"></span>
+                    <!-- <ul class="dropdown" id="resultsList"></ul> -->
+                </div>
+                <a href="/cart">
+                    <i class='bx bx-sm bx-shopping-bag cart-btn'></i>
+                    <span class="cart-notification-dot">
+                        <div class="cart-quantity" id="cart-quantity">0</div>
+                    </span>
+                </a>
+                <a href="/me" id="userProfile" style="text-decoration: none; display: flex; align-items: center; gap: 6px;
+                          font-weight: 550; font-size: 22px; color: #333; position: relative;">
+
+                    <i class='bx bx-user' style="font-size: 22px"></i>
+                    <span onclick="window.location.href=`/auth/edit`" id="user_authenticated"
+                        style="font-size: 19px; font-family: 'Poppins', sans-serif;"></span>
+
+                </a>
+
+                <a onclick="toggleDropdownCateg(event)">
+                    <i class='bx bx-sm bx-category categ-for-mobile'></i>
+                </a>
+                <a onclick="{
+                    if(localStorage.getItem('constantSessionProducuts')){
+                        window.location.href = `cp/?req=` + 'slp';
+                    }
+                }">
+                    <i class='bx bx-sm bxs-offer categ-for-mobile'></i>
+                </a>
+            </div>
+        </div>
+        <div id="nav-option-div" class="navbar-div nav-option-div">
+            <a onclick="{
+                if(localStorage.getItem('constantSessionProducuts')){
+                    window.location.href = `cp/?req=` + 'slp';
+                }
+            }" class="nav-option">Sale</a>
+            <a href="#contact" onclick="stc(event)" class="nav-option">Contact</a>
+            <a href="/about" class="nav-option">About</a>
+        </div>
+        <div class="nav-option-div" style="border: none; padding: 0;">
+            <ul class="dropdown" id="resultsList"></ul>
+        </div>
+        <div style="margin: 0 auto;" class="srch-mobile nav-buttons form">
+            <input class="input" id="srchbxm" placeholder="Search Item" required="" type="text" maxlength="22">
+            <ul class="dropdown" id="resultsListm"></ul>
+            <span class="input-border"></span>
+        </div>
+    </nav>
+
+    <div id="uniqueDropdown" class="dropdown-content" style="display: none;">
+        <h3 class="categories-heading">Categories</h3>
+        <ul id="catergory-ul">
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+            <li><a href="#"></a></li>
+        </ul>
+    </div>
+
+
+    <!-- Main Body -->
+
+    <img id="desktop-banner" style="width:100%">
+    <img id="mobile-banner" style="width:100%; object-fit: contain;">
+
+
+    <script>
+        document.getElementById("mobile-banner").src = "/assets/public/imgs/mobile-homepage-banner.png";
+        document.getElementById("desktop-banner").src = "/assets/public/imgs/desktop-homepage-banner.png";
+    </script>
+
+    <div class="main-div" id="main-div">
+
+        <!-- Featured Products -->
+        <div class="sub-divs" id="exclusive-section">
+            <div class="exclusive-heading-wrapper-only">
+                <h2 class="exclusive-heading">Exclusive Selections</h2>
+                <p class="exclusive-subheading">Explore our handpicked collection of premium products.</p>
+            </div>
+            <div class="featured-products">
+
+                <div class='product-container' id="111111">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="222222">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="333333">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="444444">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+            </div>
+            <div class="scroll-btns">
+                <button id="scrl-left" class="scroll-btn"><i class='bx bx-chevron-left'></i></button>
+                <button id="scrl-right" class="scroll-btn"><i class='bx bx-chevron-right'></i></button>
+            </div>
+        </div>
+
+        <!-- New Arrivals -->
+        <div class="sub-divs" id="fresharrivals-section">
+            <div class="exclusive-heading-wrapper">
+                <h2 class="exclusive-heading">Fresh Arrivals</h2>
+                <p class="exclusive-subheading">Discover our latest trends and essentials, just added for you.</p>
+            </div>
+            <div class="featured-products">
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+
+            </div>
+            <div class="scroll-btns">
+                <button id="scrl-left" class="scroll-btn"><i class='bx bx-chevron-left'></i></button>
+                <button id="scrl-right" class="scroll-btn"><i class='bx bx-chevron-right'></i></button>
+            </div>
+        </div>
+
+        <!-- New Arrivals -->
+        <div class="sub-divs" id="category-section">
+            <div class="exclusive-heading-wrapper">
+                <h2 class="exclusive-heading">Handpicked For You</h2>
+                <p class="exclusive-subheading">Explore our curated selection of premium to elevate your lifestyle.</p>
+            </div>
+            <div class="featured-products">
+
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+
+                <div class='product-container' id="specific-div">
+                    <div class='product-image'>
+                        <button class="CartBtn">
+                            <span class="IconContainer">
+                                <svg xmlns="http://www.w3.org/2000/svg" height="1em" viewBox="0 0 576 512"
+                                    fill="rgb(17, 17, 17)" class="cart">
+                                    <path
+                                        d="M0 24C0 10.7 10.7 0 24 0H69.5c22 0 41.5 12.8 50.6 32h411c26.3 0 45.5 25 38.6 50.4l-41 152.3c-8.5 31.4-37 53.3-69.5 53.3H170.7l5.4 28.5c2.2 11.3 12.1 19.5 23.6 19.5H488c13.3 0 24 10.7 24 24s-10.7 24-24 24H199.7c-34.6 0-64.3-24.6-70.7-58.5L77.4 54.5c-.7-3.8-4-6.5-7.9-6.5H24C10.7 48 0 37.3 0 24zM128 464a48 48 0 1 1 96 0 48 48 0 1 1 -96 0zm336-48a48 48 0 1 1 0 96 48 48 0 1 1 0-96z">
+                                    </path>
+                                </svg>
+                            </span>
+                            <p class="text">Add to Cart</p>
+                        </button></i>
+                    </div>
+                    <div class="details-div">
+                        <div class="upper-border-div"></div>
+                    </div>
+                </div>
+                <div class="lower-border-div"></div>
+            </div>
+            <div class="scroll-btns">
+                <button id="scrl-left" class="scroll-btn"><i class='bx bx-chevron-left'></i></button>
+                <button id="scrl-right" class="scroll-btn"><i class='bx bx-chevron-right'></i></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Contact Form -->
+    <hr
+        style="border: none;height: 2px;background: linear-gradient(to right, #ccc, #eee, #ccc);margin: 20px auto;width: 90%;opacity: 0.9;">
+
+    <div id="contact" class="contact-page">
+        <h1>Get in Touch</h1>
+
+        <div class="form-container">
+            <div class="portions" style="gap: 25px;">
+                <div class="form-group">
+                    <input type="text" id="full-name" required placeholder=" " autocomplete="off" />
+                    <label for="full-name">Full Name *</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="email" id="email" required placeholder=" " autocomplete="off" />
+                    <label for="email">Email *</label>
+                </div>
+
+                <div class="form-group">
+                    <input type="tel" id="phone" required placeholder=" " autocomplete="off" />
+                    <label for="phone">Phone *</label>
+                </div>
+            </div>
+            <div class="portions">
+                <div class="form-group">
+                    <textarea id="message" required placeholder=" " autocomplete="off"></textarea>
+                    <label for="message">Message *</label>
+                </div>
+
+                <button onclick="sendContactFormData()" class="submit-button">Send Message</button>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Footer -->
+
+    <footer class="footer" id="footer" style="margin-top: 100px;">
+        <div class="footer-container">
+
+            <!-- Left Section - About Us -->
+            <div class="footer-about">
+                <h3>About NexaEase</h3>
+                <p>
+                    NexaEase is your trusted partner for tech gadgets, proudly serving all of Pakistan. Our mission is
+                    to bring the latest tech right to your doorstep, offering products that elevate your lifestyle.
+                </p>
+                <p><strong>Note: NexaEase does not own the products, but sources and delivers them upon
+                        request.</strong></p>
+            </div>
+
+            <!-- Right Section - Follow Us -->
+            <div class="footer-follow">
+                <h3>Follow Us</h3>
+                <p>Stay connected through our social media for updates and exclusive offers:</p>
+                <ul class="footer-social">
+                    <li><a href="https://wa.me/923324819987" target="_blank"><i class='bx bxl-whatsapp'></i></a></li>
+                    <li><a href="https://instagram.com/nexa.ease" target="_blank"><i class='bx bxl-instagram'></i></a>
+                    </li>
+                    <li><a href="https://www.facebook.com/profile.php?id=61565360957622" target="_blank"><i
+                                class='bx bxl-facebook'></i></a></li>
+                    <li><a href="mailto:nexaease@gmail.com"><i class='bx bxl-gmail'></i></a></li>
+                </ul>
+                <div style="display: flex; flex-direction: row; gap: 15px;">
+                    <h5><a href="#contact" onclick="stc(event)">Contact Us</a></h5>
+                    <h5><a href="/about">About Us</a></h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 NexaEase. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+    <!-- JS files -->
+    <script src="/assets/public/js/notifier.js"></script>
+    <script src="/assets/public/js/contactUs.js"></script>
+    <script src="/assets/public/js/index.js"></script>
+
+
+
+    <script>
+        function toggleDropdownCateg(event) {
+            event.stopPropagation();
+            const dropdown = document.getElementById("uniqueDropdown");
+            dropdown.style.display = dropdown.style.display === "none" ? "block" : "none";
+        }
+
+        document.addEventListener("click", function (event) {
+            const dropdown = document.getElementById("uniqueDropdown");
+            const toggleButton = document.getElementById("toggleButton");
+
+            if (dropdown.style.display === "block" && !dropdown.contains(event.target) && event.target !== toggleButton) {
+                dropdown.style.display = "none";
+            }
+        });
+    </script>
+
+    <script>
+        function stc(e) {
+            e.preventDefault();
+            const target = document.querySelector(e.target.getAttribute("href"));
+            target.scrollIntoView({ behavior: "smooth", block: "center" });
+        }
+        const scrlCont = () => document.querySelector('#contact').scrollIntoView({ behavior: "smooth", block: "center" })
+    </script>
+
+    <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
+
+</body>
+
+</html>

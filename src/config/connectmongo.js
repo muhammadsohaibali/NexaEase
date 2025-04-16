@@ -14,4 +14,10 @@ async function connectDB() {
     }
 }
 
-module.exports = connectDB;
+async function connectMongo() {
+    await client.connect();
+    const db = client.db("NexaEaseDB");
+    return { db, client };
+}
+
+module.exports = { connectDB, connectMongo };

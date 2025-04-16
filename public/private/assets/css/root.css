@@ -1,212 +1,211 @@
 body {
-    font-family: 'Arial', sans-serif;
-    margin: 0;
-    padding: 0;
-    color: #333;
-    user-select: none;
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #333;
+  user-select: none;
 }
 
 .cart-navbar {
-    background-color: #fff;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-    padding: 10px 20px;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  padding: 10px 20px;
 }
 
 .navbar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
 }
 
 .logo-wrapper {
-    cursor: pointer;
+  cursor: pointer;
 }
 
 .logo-image {
-    height: 40px;
+  height: 40px;
 }
 
 .nav-buttons {
-    display: flex;
-    gap: 20px;
+  display: flex;
+  gap: 20px;
 }
 
 .nav-button {
-    font-family: 'ggsans', sans-serif;
-    color: #000;
-    text-decoration: none;
-    font-weight: 600;
-    transition: color 0.3s;
+  font-family: "ggsans", sans-serif;
+  color: #000;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
 }
 
 .nav-button:hover {
-    color: #c57600;
+  color: #c57600;
 }
 
 .cart-notification-dot {
-    position: relative;
+  position: relative;
 }
 
 .cart-quantity {
-    position: absolute;
-    top: -10px;
-    right: -5px;
-    background-color: rgba(80, 80, 80, 255);
-    color: white;
-    border-radius: 50%;
-    font-size: 12px;
-    width: 18px;
-    height: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: absolute;
+  top: -10px;
+  right: -5px;
+  background-color: rgba(80, 80, 80, 255);
+  color: white;
+  border-radius: 50%;
+  font-size: 12px;
+  width: 18px;
+  height: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .container {
-    width: 80%;
-    max-width: 95%;
-    margin: 0 auto;
-    padding: 10px 40px;
+  width: 80%;
+  max-width: 95%;
+  margin: 0 auto;
+  padding: 10px 40px;
 }
 
 footer {
-    background-color: #282828;
-    color: #f0f0f0;
-    padding: 50px 0;
-    font-family: 'Poppins', sans-serif;
-    border-top: 1px solid #555;
+  background-color: #282828;
+  color: #f0f0f0;
+  padding: 50px 0;
+  font-family: "Poppins", sans-serif;
+  border-top: 1px solid #555;
 }
 
 .footer-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: flex-start;
-    width: 90%;
-    max-width: 1200px;
-    margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 90%;
+  max-width: 1200px;
+  margin: auto;
 }
 
 .footer-about,
 .footer-follow {
-    max-width: 45%;
+  max-width: 45%;
 }
 
 .footer-about h3,
 .footer-follow h3 {
-    font-size: 1.6rem;
-    margin-bottom: 20px;
-    color: #ffffff;
+  font-size: 1.6rem;
+  margin-bottom: 20px;
+  color: #ffffff;
 }
 
 .footer-about p,
 .footer-follow p {
-    font-size: 1rem;
-    color: #f0f0f0;
-    line-height: 1.6;
+  font-size: 1rem;
+  color: #f0f0f0;
+  line-height: 1.6;
 }
 
 .footer-about p strong {
-    font-weight: bold;
-    color: #ffffff;
+  font-weight: bold;
+  color: #ffffff;
 }
 
 .footer-follow ul {
-    display: flex;
-    gap: 20px;
-    margin-top: 10px;
-    list-style: none;
-    padding: 0;
+  display: flex;
+  gap: 20px;
+  margin-top: 10px;
+  list-style: none;
+  padding: 0;
 }
 
 .footer-follow ul li a {
-    font-size: 2rem;
-    color: #f0f0f0;
-    transition: color 0.3s ease;
+  font-size: 2rem;
+  color: #f0f0f0;
+  transition: color 0.3s ease;
 }
 
 .footer-follow ul li a:hover {
-    color: #ff6f61;
+  color: #ff6f61;
 }
 
 .footer-bottom {
-    text-align: center;
-    padding: 20px 0;
-    background-color: #222;
-    color: #ccc;
-    font-size: 0.9rem;
-    border-top: 1px solid #555;
+  text-align: center;
+  padding: 20px 0;
+  background-color: #222;
+  color: #ccc;
+  font-size: 0.9rem;
+  border-top: 1px solid #555;
 }
 
 .footer-bottom p {
-    margin: 0;
+  margin: 0;
 }
-
 
 /* Media Queries Combined */
 @media (max-width: 768px) {
-    .cart-navbar {
-        padding: 4px 8px;
-    }
+  .cart-navbar {
+    padding: 4px 8px;
+  }
 
-    .navbar-container {
-        width: 90% !important;
-    }
+  .navbar-container {
+    width: 90% !important;
+  }
 
-    .logo-image {
-        height: 24px;
-    }
+  .logo-image {
+    height: 24px;
+  }
 
-    .nav-buttons {
-        gap: 8px;
-    }
+  .nav-buttons {
+    gap: 8px;
+  }
 
-    .nav-button {
-        font-size: 11px;
-    }
+  .nav-button {
+    font-size: 11px;
+  }
 
-    .cart-quantity {
-        top: -8px;
-        right: -4px;
-        font-size: 10px;
-        width: 15px;
-        height: 15px;
-    }
+  .cart-quantity {
+    top: -8px;
+    right: -4px;
+    font-size: 10px;
+    width: 15px;
+    height: 15px;
+  }
 
-    .container {
-        width: 95%;
-        padding: 10px 0;
-    }
+  .container {
+    width: 95%;
+    padding: 10px 0;
+  }
 
-    .footer-container {
-        flex-direction: column;
-        align-items: center;
-    }
+  .footer-container {
+    flex-direction: column;
+    align-items: center;
+  }
 
-    .footer-about,
-    .footer-follow {
-        max-width: 100%;
-        text-align: center;
-        margin-bottom: 30px;
-    }
+  .footer-about,
+  .footer-follow {
+    max-width: 100%;
+    text-align: center;
+    margin-bottom: 30px;
+  }
 
-    .footer-about h3,
-    .footer-follow h3 {
-        font-size: 1.4rem;
-    }
+  .footer-about h3,
+  .footer-follow h3 {
+    font-size: 1.4rem;
+  }
 
-    .footer-about p,
-    .footer-follow p {
-        font-size: 0.9rem;
-    }
+  .footer-about p,
+  .footer-follow p {
+    font-size: 0.9rem;
+  }
 
-    .footer-follow ul {
-        flex-direction: row;
-        justify-content: center;
-        margin: 10px 0;
-    }
+  .footer-follow ul {
+    flex-direction: row;
+    justify-content: center;
+    margin: 10px 0;
+  }
 
-    .footer-follow ul li a {
-        font-size: 1.5rem;
-    }
+  .footer-follow ul li a {
+    font-size: 1.5rem;
+  }
 }

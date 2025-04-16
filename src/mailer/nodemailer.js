@@ -1,13 +1,9 @@
-const { MongoClient, ObjectId } = require("mongodb");
 const cookieParser = require("cookie-parser");
-const session = require("express-session");
+const nodemailer = require('nodemailer');
 const express = require("express");
 const router = express.Router();
-const axios = require("axios");
-
 
 router.use(cookieParser());
-
 
 function validateEmail(email) {
     const emailProviders = [
@@ -15,33 +11,19 @@ function validateEmail(email) {
         "@mail.com", "@protonmail.com", "@zoho.com", "@gmx.com", "@yandex.com", "@tutanota.com", "@fastmail.com",
         "@inbox.com", "@rediffmail.com", "@web.de", "@seznam.cz", "@mail.ru", "@naver.com", "@qq.com", "@daum.net",
     ];
-
     const re = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    return (
-        re.test(email) && emailProviders.some((domain) => email.endsWith(domain))
-    );
+    return (re.test(email) && emailProviders.some((domain) => email.endsWith(domain)));
 }
 
 // ============================================================================================
 
-const nodemailer = require('nodemailer');
-
 const transporter = nodemailer.createTransport({
-    service: 'gmail',
-    auth: {
-        user: process.env.EMAIL,
-        pass: process.env.PASSWORD
-    }
+    service: 'gmail', auth: { user: process.env.EMAIL, pass: process.env.PASSWORD }
 });
 
 async function sendNodeMail(email, subject, template) {
-    if (!email || !template) {
-        throw { status: 400, message: "Invalid request parameters" };
-    }
-
-    if (!validateEmail(email)) {
-        throw { status: 400, message: "Invalid Email" };
-    }
+    if (!email || !template) throw { status: 400, message: "Invalid request parameters" };
+    if (!validateEmail(email)) throw { status: 400, message: "Invalid Email" };
 
     const mailOptions = {
         to: email,

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/assets/public/css/waveLoader.css">
+    <link rel="stylesheet" href="/assets/public/css/notifier.css">
+    <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+    <link rel="stylesheet" href="/assets/public/css/category.css">
+    <title>NexaEase - Category</title>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="loading-overlay">
+        <span class="loader-text">
+            <span style="color: #faa24a">Nexa</span><span style="color: #30a6d0;">Ease</span>
+        </span>
+        <div class="dots-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+    <!--  -->
+    <div id="notify"></div>
+
+    <nav class="cart-navbar">
+        <div class="navbar-container" style="width: 70%; margin-left: auto; margin-right: auto">
+            <div class="logo-wrapper">
+                <a href="/"><img class="logo-image" src="/assets/public/imgs/nexa-ease-logo-transparent.png"
+                        alt="NexaEase" /></a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/cart">
+                    <i class='bx bx-sm bx-shopping-bag cart-btn'></i>
+                    <span class="cart-notification-dot">
+                        <div class="cart-quantity" id="cart-quantity">0</div>
+                    </span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="category-container">
+        <!-- Sidebar Filters -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h3>Filters</h3>
+                <button class="clear-all">Clear All</button>
+            </div>
+
+            <!-- Price Filter -->
+            <div class="filter-group">
+                <div class="filter-header">
+                    <h4>Price <span id="current-price">- 10000</span></h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-content">
+                    <div class="price-range">
+                        <input type="range" min="0" max="10000" value="10000" class="slider" id="priceRange">
+                        <div class="price-values">
+                            <span>Rs 0</span>
+                            <span>Rs 10000</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Categories -->
+            <div id="filter-group-categories" class="filter-group">
+                <div class="filter-header">
+                    <h4>Categories</h4>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="filter-content">
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <div class="category-header">
+                <div class="breadcrumbs">
+                    <a href="/">Home</a> / <a href="/category">Categories</a> / <span></span>
+                </div>
+                <h1></h1>
+                <p class="category-description"></p>
+            </div>
+
+            <div class="sort-options">
+                <div class="sort-by">
+                    <label for="sort">Sort by:</label>
+                    <select id="sort">
+                        <option value="price-low">Price: Low to High</option>
+                        <option value="price-high">Price: High to Low</option>
+                        <option value="rating">Customer Rating</option>
+                        <option value="newest">Newest Arrivals</option>
+                    </select>
+                </div>
+                <div class="search-box">
+                    <input type="text" class="search-input" placeholder="Search products..." id="searchQuery">
+                    <button class="clear-btn" id="clearSearch" aria-label="Clear search">
+                        <svg class="clear-icon" viewBox="0 0 24 24">
+                            <path
+                                d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
+                        </svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <section id="category-section" class="products-section">
+                <div class="section-header">
+                    <h2 id="category-header">Discover Our Premium Collection</h2>
+                    <p id="category-description">Browse our carefully selected range of high-quality products to find
+                        exactly what you need.</p>
+                </div>
+                <div>
+                    <span id="products-count"></span>
+                </div>
+                <div class="products-container">
+                    <!-- Products will be rendered here by JavaScript -->
+                </div>
+            </section>
+
+            <div class="pagination">
+                <button class="prev-page"><i class="fas fa-chevron-left"></i> Previous</button>
+                <div class="page-numbers">
+                    <button class="active">1</button>
+                    <button>2</button>
+                    <button>3</button>
+                    <span>...</span>
+                    <button>10</button>
+                </div>
+                <button class="next-page">Next <i class="fas fa-chevron-right"></i></button>
+            </div>
+        </main>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-about">
+                <h3>About NexaEase</h3>
+                <p>
+                    NexaEase is your trusted partner for tech gadgets, proudly serving all of Pakistan. Our mission is
+                    to bring the latest tech right to your doorstep, offering products that elevate your lifestyle.
+                </p>
+                <p><strong>Note: NexaEase does not own the products, but sources and delivers them upon
+                        request.</strong></p>
+            </div>
+            <div class="footer-follow">
+                <h3>Follow Us</h3>
+                <p>Stay connected through our social media for updates and exclusive offers:</p>
+                <ul class="footer-social">
+                    <li><a href="https://wa.me/923324819987" target="_blank"><i class='bx bxl-whatsapp'></i></a></li>
+                    <li><a href="https://instagram.com/nexa.ease" target="_blank"><i class='bx bxl-instagram'></i></a>
+                    </li>
+                    <li><a href="https://www.facebook.com/profile.php?id=61565360957622" target="_blank"><i
+                                class='bx bxl-facebook'></i></a></li>
+                    <li><a href="mailto:nexaease@gmail.com"><i class='bx bxl-gmail'></i></a></li>
+                </ul>
+                <div style="display: flex; flex-direction: row; gap: 15px;">
+                    <h5><a onclick="toCont()">Contact Us</a></h5>
+                    <script>
+                        const toCont = () => { sessionStorage.setItem('scrl', 'true'); window.location.href = '/'; }
+                    </script>
+                    <h5><a href="/about">About Us</a></h5>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 NexaEase. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="/assets/public/js/notifier.js"></script>
+    <script src="/assets/public/js/category.js"></script>
+
+</body>
+
+</html>

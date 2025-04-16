@@ -11,14 +11,13 @@ require("dotenv").config();
 const sendNodeMail = require('../mailer/nodemailer');
 const { otpTemplate } = require('../mailer/mailtemplates');
 
-const connectDB = require('../config/connectmongo');
+const { writeLog, getLogs } = require('../config/serverLogs');
+const { connectDB } = require('../config/connectmongo');
 
 function generateOTP(length = 6) {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+  const chars = "0123456789";
   let otp = "";
-  for (let i = 0; i < length; i++) {
-    otp += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
+  for (let i = 0; i < length; i++) otp += chars.charAt(Math.floor(Math.random() * chars.length));
   return otp;
 }
 
@@ -56,9 +55,11 @@ router.post("/otp/request", async (req, res) => {
   try {
     await sendNodeMail(email, "Your One-Time Passcode From NexaEase", otpTemplate(otp));
     console.log(`Sent OTP ${otp} to ${email}`);
+    writeLog("info", `Sent OTP ${otp} to ${email}`);
     res.json({ message: "OTP sent successfully" });
   } catch (error) {
     console.log(error)
+    writeLog("error", `Failed to send OTP to ${email}: ${error}`);
     res.status(500).json({ message: "Failed to send OTP" });
   }
 });
@@ -78,6 +79,7 @@ router.post("/register/verify-otp", async (req, res) => {
     return res.status(400).json({ message: "Invalid Email" });
 
   console.log(`Register - OTP ${otp} for ${email}`);
+  writeLog("info", `Register - OTP ${otp} for ${email}`);
 
   const otpData = otpStore[email];
   if (!otpData) return res.status(400).json({ message: "OTP not requested" });
@@ -131,20 +133,21 @@ router.post("/register/verify-otp", async (req, res) => {
     await sessionsCollection.updateOne(
       { email: email },
       {
-        $addToSet: { // Add sessionId to the sessionIds array without duplicating
+        $addToSet: {
           sessionIds: {
             id: sessionId,
             createdAt: new Date().toISOString(),
           },
         },
       },
-      { upsert: true } // If no user exists, create a new entry
+      { upsert: true }
     );
 
     res.cookie("sessionId", sessionId, { httpOnly: true, secure: false });
     res.json({ message: "Login successful" });
   } catch (err) {
     console.error("Error during registration:", err);
+    writeLog("error", `Error during registration: ${err}`);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -176,6 +179,7 @@ router.post("/login/verify-otp", async (req, res) => {
       return res.status(400).json({ message: "Email and OTP are required" });
 
     console.log(`Login - OTP ${otp} for ${email}`);
+    writeLog("info", `Login - OTP ${otp} for ${email}`);
 
     const otpData = otpStore[email];
     if (!otpData) return res.status(400).json({ message: "OTP not requested" });
@@ -213,8 +217,6 @@ router.post("/login/verify-otp", async (req, res) => {
 
     req.session.cookie.maxAge = 30 * 24 * 60 * 60 * 1000;
 
-    console.log(req.session);
-
     const sessionId = req.sessionID;
     const sessionsCollection = db.collection("sessions");
     await sessionsCollection.updateOne(
@@ -234,6 +236,7 @@ router.post("/login/verify-otp", async (req, res) => {
     res.json({ message: "Login successful" });
   } catch (err) {
     console.error("Error during login:", err);
+    writeLog("error", `Error during login: ${err}`);
     res.status(500).json({ message: "Internal server error" });
   }
 });
@@ -256,16 +259,37 @@ router.post("/logout", async (req, res) => {
     req.session.destroy((err) => {
       if (err) {
         console.error("Session destruction error:", err);
+        writeLog("error", `Session destruction error: ${err}`);
         return res.status(500).json({ message: "Logout failed" });
       }
       res.json({ message: "Logged out successfully" });
     });
   } catch (error) {
     console.error("Logout error:", error);
+    writeLog("error", `Logout error: ${error}`);
     res.status(500).json({ message: "Internal server error" });
   }
 });
 
-
+router.post("/logout-all", async (req, res) => {
+  if (!req.session?.user)
+    return res.status(401).json({ message: "Not logged in" });
+  try {
+    const db = await connectDB();
+    const sessionsCollection = db.collection("sessions");
+    await sessionsCollection.deleteOne({ email: req.session.user.email });
+    res.clearCookie("sessionId", {
+      httpOnly: true,
+      secure: false, // Set to true in production
+      sameSite: "strict"
+    });
+    req.session.destroy?.();
+    return res.json({ message: "Logged out from all devices successfully" });
+  } catch (error) {
+    console.error("Logout error:", error);
+    writeLog("error", `Logout error: ${error}`);
+    return res.status(500).json({ message: "Server error" });
+  }
+});
 
 module.exports = router;

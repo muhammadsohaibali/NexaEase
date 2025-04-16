@@ -1,4 +1,4 @@
-const connectDB = require('../config/connectmongo');
+const { connectDB } = require('../config/connectmongo');
 
 async function verifyUser(req, res, next) {
     if (req.session.user?.email) return next();

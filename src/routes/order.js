@@ -1,28 +1,22 @@
-const session = require("express-session");
 const express = require("express");
-const crypto = require("crypto");
 const router = express.Router();
-const axios = require("axios");
-const path = require("path");
 
 require("dotenv").config();
 
 const sendNodeMail = require('../mailer/nodemailer');
 const { orderPlacedTemplate } = require('../mailer/mailtemplates');
 
-const connectDB = require('../config/connectmongo');
+const { connectDB } = require('../config/connectmongo');
 const restoreSessionMiddleware = require("../middlewares/restoreSession");
 
-// ORDER CANCEL DURATION
-const CANCELLATION_WINDOW_HOURS = 6;
+const { writeLog, getLogs } = require('../config/serverLogs');
 
-// Short Functions
-function sanitizeString(str) {
-    return str.replace(/[.#$\[\]]/g, "");
+function isValidOrderNumber(orderNumber) {
+    return /^ne\d{10}[a-z0-9]{6}$/i.test(orderNumber);
 }
 
-function capitalizeWords(str) {
-    return str.replace(/\b\w/g, (char) => char.toUpperCase());
+function formatDate(date) {
+    return `${date.getDate()} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()} at ${date.toTimeString().slice(0, 8)}`;
 }
 
 // ==========================================================================================================
@@ -35,7 +29,7 @@ router.post("/place-order", restoreSessionMiddleware, async (req, res) => {
     const email = req.session.user.email;
 
     function generateOrderNumber(userId) {
-        const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+        const timeZone = 'Asia/Karachi';
         const options = { timeZone, year: '2-digit', month: '2-digit', day: '2-digit', hour: '2-digit', minute: '2-digit', hour12: false };
         const now = new Intl.DateTimeFormat('en-US', options).format(new Date()).split(", ");
         const [date, time] = now;
@@ -56,30 +50,28 @@ router.post("/place-order", restoreSessionMiddleware, async (req, res) => {
         const user = await usersCollection.findOne({ email });
         if (!user) return res.status(404).json({ error: "User not found" });
 
-        if (!user.cart || Object.keys(user.cart).length === 0) {
-            return res.status(400).json({ error: "Cart is empty" });
-        }
+        if (!user.cart || Object.keys(user.cart).length === 0) return res.status(400).json({ error: "Cart is empty" });
 
         const cartItems = await Promise.all(
             Object.entries(user.cart).map(async ([productId, details]) => {
-                const product = await productsCollection.findOne({ p_id: productId });
+                const product = await productsCollection.findOne({ product_id: productId });
                 if (product) {
                     return {
-                        p_id: productId,
-                        p_name: product.p_name,
+                        product_id: productId,
+                        product_name: product.product_name,
                         quantity: details.qty,
-                        price: product.s_price
+                        price: product.discounted_price,
+                        img: product.imgs[0],
+                        color: details.color ?? product.available_colors.split(',')[0]
                     };
-
                 }
                 return null;
             })
         );
 
         const validCartItems = cartItems.filter(item => item !== null);
-        if (validCartItems.length === 0) {
+        if (validCartItems.length === 0)
             return res.status(400).json({ error: "No valid products in cart" });
-        }
 
         const totalAmount = validCartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -94,30 +86,46 @@ router.post("/place-order", restoreSessionMiddleware, async (req, res) => {
             hour12: false,
         });
 
+        const orderId = generateOrderNumber(user._id)
+
         const newOrder = {
-            orderNumber: generateOrderNumber(user._id),
+            orderNumber: orderId,
             user_id: user._id,
             email: user.email,
             items: validCartItems,
             total: totalAmount,
             status: "Pending",
             createdAt: formattedDate,
+            username: user.fullName,
+            address: user.address,
+            phone: user.phoneNumber
         };
 
-        const result = await ordersCollection.insertOne(newOrder);
-
+        await ordersCollection.insertOne(newOrder);
         await usersCollection.updateOne({ _id: user._id }, { $set: { cart: {} } });
+
+        for (let product of newOrder.items) {
+            const { product_id, quantity } = product
+
+            await productsCollection.updateOne(
+                { product_id: product_id },
+                { $inc: { stock: -quantity } }
+            )
+        }
 
         try {
             await sendNodeMail(email, "NexaEase - Your Order Has Been Placed Successfully!", orderPlacedTemplate(newOrder));
             console.log(`Order Confirmation Sent To ${email} Successfully`);
+            writeLog('info', `Order Confirmation Sent To ${email} Successfully`);
         } catch (error) {
             console.log(error)
+            writeLog('error', `Error Sending Order Confirmation Email: ${error}`);
         }
 
-        res.status(201).json({ message: "Order placed successfully!", orderId: result.insertedId });
+        res.status(200).json({ message: "Order placed successfully!", orderId: orderId });
     } catch (error) {
         console.error("Error placing order:", error);
+        writeLog('error', `Error placing order: ${error}`);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
@@ -132,16 +140,12 @@ router.get("/orders/user", restoreSessionMiddleware, async (req, res) => {
     try {
         const db = await connectDB();
         const ordersCollection = db.collection("orders");
-
         const orders = await ordersCollection.find({ email }).toArray();
-
-        if (!orders.length) {
-            return res.status(404).json({ message: "No orders found for this user" });
-        }
-
+        if (!orders.length) return res.status(404).json({ message: "No orders found for this user" });
         res.status(200).json({ orders });
     } catch (error) {
         console.error("Error fetching orders by user:", error);
+        writeLog('error', `Error fetching orders by user: ${error}`);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
@@ -149,59 +153,63 @@ router.get("/orders/user", restoreSessionMiddleware, async (req, res) => {
 // Get order by order number
 router.get("/orders/:orderNumber", async (req, res) => {
     const { orderNumber } = req.params;
-
     try {
         const db = await connectDB();
         const ordersCollection = db.collection("orders");
-
         const order = await ordersCollection.findOne({ orderNumber });
-
-        if (!order) {
-            return res.status(404).json({ message: "Order not found" });
-        }
-
+        if (!order) return res.status(404).json({ message: "Order not found" });
         res.status(200).json({ order });
     } catch (error) {
         console.error("Error fetching order by order number:", error);
+        writeLog('error', `Error fetching order by order number: ${error}`);
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
 
-
 // Cancel Order
 router.post("/cancel-order/:orderNumber", restoreSessionMiddleware, async (req, res) => {
-    if (!req.session.user?.email)
+    if (!req.session.user || !req.session.user.email)
         return res.status(401).json({ message: "User not authenticated" });
 
-    const { email } = req.session.user;
-    const { orderNumber } = req.params;
+    const email = req.session.user.email;
+    const orderNumber = req.params.orderNumber;
+
+    if (!isValidOrderNumber(orderNumber))
+        return res.status(400).json({ message: "Invalid order number" });
 
     try {
         const db = await connectDB();
         const order = await db.collection("orders").findOne({ orderNumber, email });
-        if (!order) return res.status(404).json({ message: "Order not found" });
-        if (order.status === "Canceled") return res.status(400).json({ message: "Order is already canceled" });
+        const productsCollection = db.collection("products");
 
-        // Inline parser
-        const [d, t] = order.createdAt.split(" at ");
-        const orderDate = new Date(new Date(`${d} ${t}`).toLocaleString('en-US', { timeZone: 'Asia/Karachi' }));
-        const diffHrs = (new Date() - orderDate) / (1000 * 60 * 60);
+        if (!order)
+            return res.status(404).json({ message: "Order not found" });
 
-        if (diffHrs > CANCELLATION_WINDOW_HOURS)
-            return res.status(400).json({ message: `Cancellation window expired (${CANCELLATION_WINDOW_HOURS} hrs)` });
+        if (order.status.toLowerCase() === "canceled")
+            return res.status(400).json({ message: "Order is already canceled" });
+
+        if (order.status.toLowerCase() !== "pending")
+            return res.status(400).json({ message: "Order cannot be canceled" });
 
         await db.collection("orders").updateOne(
             { orderNumber },
-            { $set: { status: "Canceled", canceledAt: new Date().toISOString() } }
+            { $set: { status: "canceled", canceledAt: formatDate(new Date()) } }
         );
 
-        res.status(200).json({ message: "Order canceled successfully!" });
+        for (let { product_id, quantity } of order.items) {
+            await productsCollection.updateOne(
+                { product_id: product_id },
+                { $inc: { stock: +quantity } }
+            )
+        }
+
+        return res.status(200).json({ message: "Order canceled successfully!" });
     } catch (err) {
         console.error("Cancel error:", err);
-        res.status(500).json({ error: "Internal Server Error" });
+        writeLog('errors', `Error canceling order: ${err}`);
+        return res.status(500).json({ error: "Internal Server Error" });
     }
 });
-
 
 module.exports = router;
 

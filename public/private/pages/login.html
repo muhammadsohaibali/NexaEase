@@ -16,12 +16,11 @@
 </head>
 
 <body id="body">
-  <div id="popupNotification"></div>
+  <div id="notify"></div>
   <nav class="cart-navbar">
     <div class="navbar-container" style="width: 70%; margin-left: auto; margin-right: auto">
       <div class="logo-wrapper">
-        <a href="/"><img class="logo-image" src="/auth/assets/imgs/nexa-ease-logo-transparent.png"
-            alt="NexaEase" /></a>
+        <a href="/"><img class="logo-image" src="/auth/assets/imgs/nexa-ease-logo-transparent.png" alt="NexaEase" /></a>
       </div>
       <div class="nav-buttons">
         <a href="/" class="nav-button">Home</a>
@@ -41,7 +40,8 @@
           <input type="email" placeholder="Email" id="email" required />
         </div>
         <button id="send-otp-btn" onclick="requestOtp(event)" class="btn">
-          Get OTP
+          <span id="btn-text">Get OTP</span>
+          <span id="btn-loader" class="loader hidden"></span>
         </button>
         <div class="input-box" style="margin-bottom: 20px;">
           <input type="text" placeholder="Enter OTP" name="otp" id="otp" required disabled maxlength="6" />
@@ -51,7 +51,8 @@
             <a href="/auth/new/">Create new</a></span>
         </div>
         <button id="login-btn" onclick="authenticateUser(event)" class="btn" disabled>
-          Login
+          <span id="login-text">Login</span>
+          <span id="login-loader" class="loader hidden"></span>
         </button>
       </form>
     </div>

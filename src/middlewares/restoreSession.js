@@ -1,51 +1,30 @@
-const connectDB = require('../config/connectmongo');
+const { connectDB } = require('../config/connectmongo');
 
 async function restoreSessionMiddleware(req, res, next) {
-    console.log("Session before restoration:", req.session?.user);
-
-    if (req.session?.user) {
-        console.log("Session found in req.session:", req.session.user);
-        return next();
-    }
-    
     const sessionId = req.cookies?.sessionId;
-    if (!sessionId) {
-        console.log("No sessionId found in cookies");
-        return next();
-    }
-
+    if (!sessionId) return next();
     try {
         const db = await connectDB();
-        const sessionsCollection = db.collection("sessions");
-
-        console.log(`Trying to restore session with sessionId: ${sessionId}`);
-
-        const sessionData = await sessionsCollection.findOne({
-            "sessionIds.id": sessionId
-        });
-
-        if (!sessionData) {
-            console.log("No session data found in DB for sessionId:", sessionId);
+        const usersCollection = db.collection("sessions");
+        const userSession = await usersCollection.findOne({ "sessionIds.id": sessionId });
+        if (!userSession) {
+            res.clearCookie("sessionId");
+            req.session.destroy?.();
             return next();
         }
-
-        console.log("Session data found:", sessionData);
-
-        req.session.user = { email: sessionData.email };
-
-        // Log the restored session details
-        console.log("Restored session with email:", sessionData.email);
-
+        req.session = req.session || {};
+        req.session.user = { email: userSession.email };
         res.cookie("sessionId", sessionId, {
             httpOnly: true,
-            secure: false,
+            secure: false,             // Set true in production with HTTPS
+            sameSite: "strict"
         });
-
         return next();
     } catch (error) {
-        console.error("Restore session middleware error:", error);
+        console.error("❌ Session restore error:", error);
         return next();
     }
 }
 
 module.exports = restoreSessionMiddleware;
+

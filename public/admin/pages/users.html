@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Users | NexaEase Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+    <link rel="stylesheet" href="/assets/admin/css/components/root.css">
+    <link rel="stylesheet" href="/assets/admin/css/components/notifier.css" />
+    <link rel="stylesheet" href="/assets/admin/css/components/loader.css">
+    <link rel="stylesheet" href="/assets/admin/css/users.css">
+</head>
+
+<body>
+    <div id="notify"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-store-alt"></i>
+                <div>
+                    <span>NexaEase</span>
+                    <a target="_blank" href="/">View Site</a>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="/admin"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/products"><i class="fas fa-shopping-bag"></i> <span>Products</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/orders"><i class="fas fa-receipt"></i> <span>Orders</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/contacts"><i class="fas fa-message"></i> <span>Contacts</span></a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/customers"><i class="fas fa-users"></i> <span>Customers</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-cog"></i> <span>Settings</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div>
+                        <span class="username">Logout</span>
+                    </div>
+                    <i class="fas fa-sign-out"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1>User Management</h1>
+                    <p class="subtitle">Manage all registered users and their permissions</p>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-users" placeholder="Search users..." />
+                    </div>
+                </div>
+            </header>
+
+            <!-- Users Filters -->
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select id="sort-by">
+                        <option value="aplphabetical">Aplha: A - Z</option>
+                        <option value="old-to-new">Users: Old To New</option>
+                        <option value="new-to-old">Users: New To Old</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Joined</label>
+                    <select id="filter-date">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="week">This Week</option>
+                        <option value="month">This Month</option>
+                    </select>
+                </div>
+                <button class="btn btn-text" id="reset-filters">
+                    <i class="fas fa-sync-alt"></i> Reset
+                </button>
+            </section>
+
+            <!-- Users Table -->
+            <section class="users-table-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Registered Users</h3>
+                        <span id="users-count"></span>
+                    </div>
+                    <div id="loading-overlay" class="div-loader">
+                        <span class="loader"></span>
+                    </div>
+                    <div class="card-body">
+                        <table id="users-table" class="users-table" style="display: none;">
+                            <thead>
+                                <tr>
+                                    <th class="user-avatar-col">User</th>
+                                    <th>Email</th>
+                                    <th>Contact</th>
+                                    <th>Address</th>
+                                    <th>Joined</th>
+                                    <th>Last Active</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="users-table-body">
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="pagination">
+                            <button id="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                            <span id="page-info">Page 1 of 1</span>
+                            <button id="next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/assets/admin/js/components/loader.js"></script>
+    <script src="/assets/admin/js/components/notifier.js"></script>
+    <script src="/assets/admin/js/users.js"></script>
+</body>
+
+</html>

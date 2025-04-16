@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard | NexaEase Admin</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="/assets/admin/css/components/root.css">
+  <link rel="stylesheet" href="/assets/admin/css/components/loader.css">
+  <link rel="stylesheet" href="/assets/admin/css/components/notifier.css" />
+  <link rel="stylesheet" href="/assets/admin/css/components/notifications.css">
+  <link rel="stylesheet" href="/assets/admin/css/dashboard.css" />
+</head>
+
+<body>
+  <div id="notify"></div>
+
+  <div class="dashboard-container">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="logo">
+        <i class="fas fa-store-alt"></i>
+        <div>
+          <span>NexaEase</span>
+          <a target="_blank" href="/">View Site</a>
+        </div>
+      </div>
+      <nav class="sidebar-nav">
+        <ul>
+          <li class="active">
+            <a href="/admin"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+          </li>
+          <li>
+            <a href="/admin/products"><i class="fas fa-shopping-bag"></i> <span>Products</span></a>
+          </li>
+          <li>
+            <a href="/admin/orders"><i class="fas fa-receipt"></i> <span>Orders</span></a>
+          </li>
+          <li>
+            <a href="/admin/contacts"><i class="fas fa-message"></i> <span>Contacts</span></a>
+          </li>
+          <li>
+            <a href="/admin/customers"><i class="fas fa-users"></i> <span>Customers</span></a>
+          </li>
+          <li>
+            <a href="#"><i class="fas fa-cog"></i> <span>Settings</span></a>
+          </li>
+        </ul>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="user-profile">
+          <div>
+            <span class="username">Logout</span>
+          </div>
+          <i class="fas fa-sign-out"></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Loader -->
+    <div id="loading-overlay" class="section-loader">
+      <span class="loader"></span>
+    </div>
+
+    <!-- Main Content -->
+    <main style="display: none" class="main-content" id="dashboard">
+      <header class="main-header">
+        <div class="header-left">
+          <h1>Dashboard</h1>
+        </div>
+        <div class="notification-container">
+          <div class="notification-icon">
+            <i class="fas fa-bell"></i>
+            <span class="notification-badge" id="notificationCount">0</span>
+          </div>
+          <div class="notification-dropdown" id="notificationDropdown">
+            <div class="notification-header">
+              <h3>Notifications</h3>
+              <button class="clear-all" id="clearAllNotifications">Clear All</button>
+            </div>
+            <ul class="notification-list" id="notificationList">
+              <li class="empty-notifications">No new notifications</li>
+            </ul>
+            <div class="notification-footer">
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- Stats Cards -->
+      <section class="stats-cards">
+        <div class="card">
+          <div class="card-icon bg-blue">
+            <i class="fas fa-dollar-sign"></i>
+          </div>
+          <div class="card-info">
+            <h3>Rs 24,780</h3>
+            <p>Revenue</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon bg-green">
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="card-info">
+            <h3>1,245</h3>
+            <p>Orders</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon bg-orange">
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="card-info">
+            <h3>845</h3>
+            <p>Customers</p>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-icon bg-purple">
+            <i class="fas fa-box-open"></i>
+          </div>
+          <div class="card-info">
+            <h3>56</h3>
+            <p>Products</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- Charts and Main Content -->
+      <section class="content-row">
+        <div class="large-card">
+          <div class="card-header">
+            <h3>Sales Overview</h3>
+            <div class="time-filter">
+              <select>
+                <option>Daily</option>
+                <option selected>Monthly</option>
+                <option>Yearly</option>
+              </select>
+            </div>
+          </div>
+          <div class="chart-container" style="position: relative; height:400px; width:100%">
+            <canvas id="salesChart"></canvas>
+          </div>
+        </div>
+        <div class="small-card">
+          <div class="card-header">
+            <h3>Recent Products</h3>
+            <button onclick="location.assign('/admin/products')" class="btn btn-secondary">View All</button>
+          </div>
+          <div class="card-body">
+            <div class="product-item">
+              <div class="product-rank">1</div>
+              <img src="https://via.placeholder.com/40" alt="Product" />
+              <div class="product-info">
+                <h4>Wireless Headphones</h4>
+                <p>Electronics</p>
+              </div>
+              <div class="product-sales">Rs 3,240</div>
+            </div>
+            <div class="product-item">
+              <div class="product-rank">2</div>
+              <img src="https://via.placeholder.com/40" alt="Product" />
+              <div class="product-info">
+                <h4>Smart Watch Pro</h4>
+                <p>Electronics</p>
+              </div>
+              <div class="product-sales">Rs 2,890</div>
+            </div>
+            <div class="product-item">
+              <div class="product-rank">3</div>
+              <img src="https://via.placeholder.com/40" alt="Product" />
+              <div class="product-info">
+                <h4>Running Shoes</h4>
+                <p>Sports</p>
+              </div>
+              <div class="product-sales">Rs 1,950</div>
+            </div>
+            <div class="product-item">
+              <div class="product-rank">4</div>
+              <img src="https://via.placeholder.com/40" alt="Product" />
+              <div class="product-info">
+                <h4>Bluetooth Speaker</h4>
+                <p>Electronics</p>
+              </div>
+              <div class="product-sales">Rs 1,750</div>
+            </div>
+            <div class="product-item">
+              <div class="product-rank">5</div>
+              <img src="https://via.placeholder.com/40" alt="Product" />
+              <div class="product-info">
+                <h4>Leather Wallet</h4>
+                <p>Accessories</p>
+              </div>
+              <div class="product-sales">Rs 1,240</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Recent Orders -->
+      <section class="content-row">
+        <div class="full-width-card">
+          <div class="card-header">
+            <h3>Recent Orders</h3>
+            <button onclick="location.assign('/admin/orders')" class="btn btn-secondary">View All</button>
+          </div>
+          <div class="card-body">
+            <table class="orders-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Customer</th>
+                  <th>Date</th>
+                  <th>Amount</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>#ORD-7841</td>
+                  <td>
+                    Sarah Johnson
+                  </td>
+                  <td>May 12, 2023</td>
+                  <td>Rs 189.99</td>
+                  <td><span class="status shipped">Shipped</span></td>
+                  <td>
+                    <button class="btn-icon">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn-icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-7839</td>
+                  <td>
+                    Michael Chen
+                  </td>
+                  <td>May 11, 2023</td>
+                  <td>Rs 245.50</td>
+                  <td><span class="status delivered">Delivered</span></td>
+                  <td>
+                    <button class="btn-icon">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn-icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-7835</td>
+                  <td>
+                    Emily Rodriguez
+                  </td>
+                  <td>May 10, 2023</td>
+                  <td>Rs 89.99</td>
+                  <td><span class="status processing">Processing</span></td>
+                  <td>
+                    <button class="btn-icon">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn-icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-7828</td>
+                  <td>
+                    David Wilson
+                  </td>
+                  <td>May 9, 2023</td>
+                  <td>Rs 320.00</td>
+                  <td><span class="status pending">Pending</span></td>
+                  <td>
+                    <button class="btn-icon">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn-icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+                <tr>
+                  <td>#ORD-7821</td>
+                  <td>
+                    Jessica Lee
+                  </td>
+                  <td>May 8, 2023</td>
+                  <td>Rs 156.75</td>
+                  <td><span class="status cancelled">Cancelled</span></td>
+                  <td>
+                    <button class="btn-icon">
+                      <i class="fas fa-eye"></i>
+                    </button>
+                    <button class="btn-icon">
+                      <i class="fas fa-edit"></i>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="/assets/admin/js/components/loader.js"></script>
+  <script src="/assets/admin/js/components/notifications.js"></script>
+  <script src="/assets/admin/js/components/notifier.js"></script>
+  <script src="/assets/admin/js/dashboard.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+
+</html>

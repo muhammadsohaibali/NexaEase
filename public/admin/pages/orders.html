@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Orders | NexaEase Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+    <link rel="stylesheet" href="/assets/admin/css/components/root.css">
+    <link rel="stylesheet" href="/assets/admin/css/components/notifier.css" />
+    <link rel="stylesheet" href="/assets/admin/css/components/loader.css">
+    <link rel="stylesheet" href="/assets/admin/css/orders.css">
+</head>
+
+<body>
+    <div id="notify"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-store-alt"></i>
+                <div>
+                    <span>NexaEase</span>
+                    <a target="_blank" href="/">View Site</a>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="/admin"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/products"><i class="fas fa-shopping-bag"></i> <span>Products</span></a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/orders"><i class="fas fa-receipt"></i> <span>Orders</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/contacts"><i class="fas fa-message"></i> <span>Contacts</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/customers"><i class="fas fa-users"></i> <span>Customers</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-cog"></i> <span>Settings</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div>
+                        <span class="username">Logout</span>
+                    </div>
+                    <i class="fas fa-sign-out"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1>Orders</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" placeholder="Search orders..." />
+                    </div>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Orders Filters -->
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label>Status</label>
+                    <select>
+                        <option>All Statuses</option>
+                        <option>Pending</option>
+                        <option>Processing</option>
+                        <option>Shipped</option>
+                        <option>Completed</option>
+                        <option>Cancelled</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Date Range</label>
+                    <select>
+                        <option>All Time</option>
+                        <option>Today</option>
+                        <option>Yesterday</option>
+                        <option>Last 7 Days</option>
+                        <option>Last 30 Days</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>Sort By</label>
+                    <select>
+                        <option>Newest First</option>
+                        <option>Oldest First</option>
+                        <option>Total: Low to High</option>
+                        <option>Total: High to Low</option>
+                    </select>
+                </div>
+                <button class="btn btn-text">
+                    <i class="fas fa-sync-alt"></i> Reset
+                </button>
+            </section>
+
+            <!-- Orders Table -->
+            <section class="orders-table-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Recent Orders</h3>
+                        <span>Showing 1-10 of 124 orders</span>
+                    </div>
+                    <div id="loading-overlay" class="div-loader">
+                        <span class="loader"></span>
+                    </div>
+                    <div id="orders-table-div" class="card-body" style="display: none;">
+                        <table class="orders-table">
+                            <thead>
+                                <tr>
+                                    <th>Order ID</th>
+                                    <th>Customer</th>
+                                    <th>Items</th>
+                                    <th>Date</th>
+                                    <th>Total</th>
+                                    <th>Status</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="/assets/admin/js/components/loader.js"></script>
+    <script src="/assets/admin/js/components/notifier.js"></script>
+    <script src="/assets/admin/js/orders.js"></script>
+</body>
+
+</html>

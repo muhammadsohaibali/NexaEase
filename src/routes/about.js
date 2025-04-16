@@ -8,7 +8,7 @@ require("dotenv").config();
 
 router.use(cookieParser());
 
-const connectDB = require('../config/connectmongo');
+const { connectDB } = require('../config/connectmongo');
 
 // =======================================================================
 

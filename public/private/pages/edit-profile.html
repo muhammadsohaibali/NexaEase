@@ -16,7 +16,7 @@
 </head>
 
 <body id="body">
-  <div id="popupNotification"></div>
+  <div id="notify"></div>
   <nav class="cart-navbar">
     <div class="navbar-container" style="width: 70%; margin-left: auto; margin-right: auto">
       <div class="logo-wrapper">
@@ -37,7 +37,7 @@
       <form autocomplete="off">
         <h1>Profile Settings</h1>
         <div class="input-box">
-          <input type="text" placeholder="Full Name" id="name" required autocomplete="off" />
+          <input type="text" placeholder="Full Name" id="fullName" required autocomplete="off" />
         </div>
         <div class="input-box">
           <input type="number" placeholder="Phone Number" id="phoneNumber" required autocomplete="off" />
@@ -51,8 +51,9 @@
                 cursor: not-allowed;
               " type="email" placeholder="Email" id="email" required disabled autocomplete="off" />
         </div>
-        <button id="login-btn" onclick="updateUserProfile(event)" style="margin-top: 10px" class="btn">
-          Save Changes
+        <button id="update-btn" onclick="updateUserProfile(event)" style="margin-top: 10px" class="btn">
+          <span id="update-text">Save Changes</span>
+          <span id="update-loader" class="loader hidden"></span>
         </button>
       </form>
     </div>

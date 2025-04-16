@@ -39,9 +39,6 @@
             <div class="nav-buttons">
                 <a href="/" class="nav-button">Home</a>
                 <a onclick="toCont()" style="cursor: pointer;" class="nav-button">Contact</a>
-                <script>
-                    const toCont = () => { sessionStorage.setItem('scrl', 'true'); window.location.href = '/'; }
-                </script>
                 <a href="/about" class="nav-button">About</a>
             </div>
         </div>
@@ -105,7 +102,8 @@
               color: white;
             ">
                     <h5>
-                        <a onclick="toCont()" style="text-decoration: none; color: white; font-size: 14px">Contact Us</a>
+                        <a onclick="toCont()" style="text-decoration: none; color: white; font-size: 14px">Contact
+                            Us</a>
                     </h5>
                     <h5>
                         <a href="/about" style="text-decoration: none; color: white; font-size: 14px">About Us</a>
@@ -121,20 +119,15 @@
     <!--  -->
 
     <script>
-        function ts(strg, len) {
-            if (!(typeof strg === "string")) return console.error("This Is not String");
-            if (strg.length > len) return `${strg.slice(0, len)}...`;
-            return strg;
-        }
-        fetch(window.location.href)
-            .then(response => {
-                const url = response.headers.get("X-Requested-URL");
-                if (url) {
-                    document.getElementById("requested-url").textContent = `"${ts(url, 15)}"`;
-                }
+        const toCont = () => { sessionStorage.setItem('scrl', 'true'); window.location.href = '/'; }
+        const [getElement, ts] = [document.getElementById, (s, l) => (s.length > l ? `${s.slice(0, l)}...` : s)];
+
+        fetch(location.href)
+            .then(res => res.headers.get("X-Requested-URL"))
+            .then(url => {
+                if (url) document.getElementById("requested-url").textContent = `"${ts(`/${url.split('/')[1]}`, 15)}"`;
                 document.getElementById("loading-overlay").style.display = "none";
             })
-            .catch(err => console.log("Failed to fetch URL:", err));
     </script>
 </body>
 

@@ -31,3 +31,36 @@ const HeaderTemplate = (username, email, joinedon, orders, Wishlist = 0) => {
         </div>
     `
 }
+
+function orderDetails(order) {
+    return `
+    <div class="order-item">
+        <span><p><strong>Order #:</strong> ${order.orderNumber}</p> <p><a href=/order/track/?order-id=${order.orderNumber}'>View Order</a><i class='bx bx-link-external'></i> </p></span>
+        <p><strong>Total:</strong> $${order.total}</p>
+        <p><strong>Status:</strong> ${order.status}</p>
+        <p><strong>Placed On:</strong> ${order.createdAt.split('at')[0].trim()}</p>
+        <details>
+            <summary>View Items</summary>
+            <div class="order-items">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Qty</th>
+                            <th>Price</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${order.items.map(item => `
+                            <tr>
+                                <td>${item.product_name}</td>
+                                <td>${item.quantity}</td>
+                                <td>$${item.price}</td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            </div>
+        </details>
+    </div>`;
+}

@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- External Libraries -->
+    <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+
+    <!-- Local Assets -->
+    <link rel="stylesheet" href="/assets/public/css/waveLoader.css">
+    <link rel="stylesheet" href="/assets/public/css/notifier.css">
+    <link rel="stylesheet" href="/assets/public/css/cart.css" />
+    <link rel="stylesheet" href="/assets/public/css/trackorder.css" />
+
+    <!-- Favicon -->
+    <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+
+    <title>Order Tracking</title>
+</head>
+
+<body>
+    <!-- Loader -->
+    <div id="loading-overlay">
+        <span class="loader-text">
+            <span style="color: #faa24a">Nexa</span><span style="color: #30a6d0;">Ease</span>
+        </span>
+        <div class="dots-loader">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+        </div>
+    </div>
+
+    <!--  -->
+    <div id="notify"></div>
+
+    <nav class="cart-navbar">
+        <div class="navbar-container" style="width: 70%; margin-left: auto; margin-right: auto">
+            <div class="logo-wrapper">
+                <a href="/"><img class="logo-image" src="/assets/public/imgs/nexa-ease-logo-transparent.png"
+                        alt="NexaEase" /></a>
+            </div>
+            <div class="nav-buttons">
+                <a href="/" class="nav-button">Home</a>
+                <a onclick="toCont()" style="cursor: pointer;" class="nav-button">Contact</a>
+                <script>
+                    const toCont = () => { sessionStorage.setItem('scrl', 'true'); window.location.href = '/'; }
+                </script>
+                <a href="about" class="nav-button">About</a>
+            </div>
+        </div>
+    </nav>
+
+    <style>
+        @media (max-width: 768px) {
+            #cart-status-heading {
+                font-size: 20px !important;
+            }
+
+            .bx-cart-alt {
+                font-size: 20px !important;
+            }
+        }
+    </style>
+
+    <div class="track-order-container" id="container">
+        <div class="track-order-card">
+            <div class="track-order-header">
+                <h1 class="track-order-title">Track Your Order</h1>
+                <p class="track-order-subtitle">Enter your Order ID below to check your order status and details</p>
+            </div>
+
+            <div class="track-order-form">
+                <div class="form-group">
+                    <label for="orderInput" class="form-label">Order ID</label>
+                    <div class="input-group">
+                        <input type="text" id="orderInput" class="form-input" placeholder="e.g. NE0123456789ABCDEF"
+                            aria-label="Order ID">
+                        <button onclick="trackOrder()" class="form-button">
+                            <span class="button-text">Track Order</span>
+                            <div class="spinner"></div>
+                        </button>
+                    </div>
+                    <p class="form-hint">You can find your Order ID in your confirmation email</p>
+                </div>
+            </div>
+
+            <div class="track-order-footer">
+                <p>Need help? <a onclick="toCont()" class="help-link">Contact our support team</a></p>
+            </div>
+        </div>
+    </div>
+
+    <div class="container" id="result" style="display: none;"></div>
+
+    <!-- Footer -->
+    <footer class="footer" style="margin-top: 50px">
+        <div class="footer-container">
+            <!-- Left Section - About Us -->
+            <div class="footer-about">
+                <h3>About NexaEase</h3>
+                <p>
+                    NexaEase is your trusted partner for tech gadgets, proudly serving
+                    all of Pakistan. Our mission is to bring the latest tech right to
+                    your doorstep, offering products that elevate your lifestyle.
+                </p>
+                <p>
+                    <strong>Note: NexaEase does not own the products, but sources and
+                        delivers them upon request.</strong>
+                </p>
+            </div>
+
+            <!-- Right Section - Follow Us -->
+            <div class="footer-follow">
+                <h3>Follow Us</h3>
+                <p>
+                    Stay connected through our social media for updates and exclusive
+                    offers:
+                </p>
+                <ul class="footer-social">
+                    <li>
+                        <a href="https://wa.me/923324819987" target="_blank"><i class="bx bxl-whatsapp"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://instagram.com/nexa.ease" target="_blank"><i class="bx bxl-instagram"></i></a>
+                    </li>
+                    <li>
+                        <a href="https://www.facebook.com/profile.php?id=61565360957622" target="_blank"><i
+                                class="bx bxl-facebook"></i></a>
+                    </li>
+                    <li>
+                        <a href="mailto:nexaease@gmail.com"><i class="bx bxl-gmail"></i></a>
+                    </li>
+                </ul>
+                <div style="display: flex; flex-direction: row; gap: 15px">
+                    <h5><a onclick="toCont()">Contact Us</a></h5>
+                    <h5><a href="/about">About Us</a></h5>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <p>&copy; 2024 NexaEase. All rights reserved.</p>
+        </div>
+    </footer>
+    <!--  -->
+
+    <script src="/assets/public/js/trackorder.js"></script>
+</body>
+
+</html>

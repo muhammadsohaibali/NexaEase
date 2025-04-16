@@ -27,6 +27,10 @@
       <div class="dot"></div>
     </div>
   </div>
+
+  <!-- Mini Loader -->
+  <span id="spinner-loader" class="spinner"></span>
+  
   <!--  -->
   <div id="notify"></div>
 
@@ -59,114 +63,72 @@
     }
   </style>
 
-  <h1 id="cart-status-heading">
-    <i class="bx bx-cart-alt bx-md"></i><span style="margin-top: auto; margin-bottom: auto; height: 25px">
-      Preparing Your Cart Details...</span>
-  </h1>
-
-  <div class="cart-container" id="cart-container">
-    <div class="cart-table-wrapper" id="cart-table-wrapper">
-      <table class="cart-table">
-        <thead>
-          <tr>
-            <th>Product</th>
-            <th>Quantity</th>
-            <th>Price</th>
-            <th></th>
-          </tr>
-        </thead>
-        <tbody id="table-body">
-          <tr class="cart-item">
-            <td>
-              <div class="product-details">
-                <img src="" alt="Product Image" class="product-image" />
-                <h2 class="product-name"></h2>
-              </div>
-            </td>
-            <td>
-              <div class="quantity-controls">
-                <button class="decrement-btn">
-                  <i class="bx bx-minus"></i>
-                </button>
-                <span class="quantity-value">0</span>
-                <button class="increment-btn">
-                  <i class="bx bx-plus"></i>
-                </button>
-              </div>
-            </td>
-            <td>PKR 0.00</td>
-            <td>
-              <button class="remove-btn"><i class="bx bx-trash"></i></button>
-            </td>
-          </tr>
-          <tr class="cart-item">
-            <td>
-              <div class="product-details">
-                <img src="" alt="Product Image" class="product-image" />
-                <h2 class="product-name"></h2>
-              </div>
-            </td>
-            <td>
-              <div class="quantity-controls">
-                <button class="decrement-btn">
-                  <i class="bx bx-minus"></i>
-                </button>
-                <span class="quantity-value">0</span>
-                <button class="increment-btn">
-                  <i class="bx bx-plus"></i>
-                </button>
-              </div>
-            </td>
-            <td>PKR 0.00</td>
-            <td>
-              <button class="remove-btn"><i class="bx bx-trash"></i></button>
-            </td>
-          </tr>
-          <tr class="cart-item">
-            <td>
-              <div class="product-details">
-                <img src="" alt="Product Image" class="product-image" />
-                <h2 class="product-name"></h2>
-              </div>
-            </td>
-            <td>
-              <div class="quantity-controls">
-                <button class="decrement-btn">
-                  <i class="bx bx-minus"></i>
-                </button>
-                <span class="quantity-value">0</span>
-                <button class="increment-btn">
-                  <i class="bx bx-plus"></i>
-                </button>
-              </div>
-            </td>
-            <td>PKR 0.00</td>
-            <td>
-              <button class="remove-btn"><i class="bx bx-trash"></i></button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-
-      <!-- Total Price Display -->
-      <div class="total-price-container">
-        <div class="total-price">
-          Total Price: Rs <span id="total-price-value">0</span>
+  <div class="page-container">
+    <div class="nexa-cart-container">
+      <!-- Cart Header -->
+      <div class="cart-header">
+        <h1>
+          <i class='bx bxs-shopping-bag'></i>
+          Your Cart
+          <span class="item-count">0 items</span>
+        </h1>
+        <div class="progress-steps">
+          <div id="step-1" class="step active">
+            <span class="step-number">1</span>
+            <span class="step-name">Your Selection</span>
+          </div>
+          <div id="step-2" class="step">
+            <span class="step-number">2</span>
+            <span class="step-name">Checkout</span>
+          </div>
+          <div id="step-3" class="step">
+            <span class="step-number">3</span>
+            <span class="step-name">Complete</span>
+          </div>
         </div>
-        <button class="place-order-btn" id="place-order-btn">
-          <span id="place-order-text-span" class="btn-text">Place Order</span>
-          <i style="font-size: 20px; margin-bottom: auto" id="arrow-right-id-cust"
-            class="bx bx-chevron-right bx-chevron-right-custom"></i>
-        </button>
+      </div>
+
+      <!-- Cart Content -->
+      <div class="cart-content">
+        <!-- Items Column (75%) -->
+        <div class="cart-items">
+          <!-- Cart items will be dynamically inserted here -->
+          <div id="empty-cart-message" class="empty-cart">
+            <h2>Your Tech Toolkit is Empty!</h2>
+            <p>Looks like you haven't added anything yet. Start shopping now!</p>
+            <a href="/" class="shop-now-btn">Shop Now</a>
+          </div>
+        </div>
+
+        <!-- Summary Column (25%) -->
+        <div class="cart-summary">
+          <div class="summary-card">
+            <h3>Order Summary</h3>
+            <div class="summary-row">
+              <span>Subtotal (0 items)</span>
+              <span>Rs 0</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping</span>
+              <span class="free">FREE</span>
+            </div>
+            <div class="summary-row discount-row" style="display: none;">
+              <span>Discount</span>
+              <span class="discount">-Rs 0</span>
+            </div>
+            <div class="divider"></div>
+            <div class="summary-row total">
+              <span>Total</span>
+              <span>Rs 0</span>
+            </div>
+            <button class="checkout-btn" disabled>Proceed to Checkout</button>
+          </div>
+        </div>
       </div>
     </div>
-
-    <!-- PLACE ORDER -->
-    <!--  -->
   </div>
 
   <!-- Footer -->
-
   <footer class="footer" style="margin-top: 50px">
     <div class="footer-container">
       <!-- Left Section - About Us -->
@@ -206,8 +168,8 @@
           </li>
         </ul>
         <div style="display: flex; flex-direction: row; gap: 15px">
-          <h5><a onclick="toCont()" href="../cu/">Contact Us</a></h5>
-          <h5><a href="about">About Us</a></h5>
+          <h5><a onclick="toCont()">Contact Us</a></h5>
+          <h5><a href="/about">About Us</a></h5>
         </div>
       </div>
     </div>

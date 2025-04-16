@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contacts | NexaEase Admin</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="icon" href="/assets/public/imgs/nexa-ease-symbol.png">
+    <link rel="stylesheet" href="/assets/admin/css/components/root.css">
+    <link rel="stylesheet" href="/assets/admin/css/components/notifier.css" />
+    <link rel="stylesheet" href="/assets/admin/css/components/loader.css">
+    <link rel="stylesheet" href="/assets/admin/css/contacts.css">
+</head>
+
+<body>
+    <div id="notify"></div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fas fa-store-alt"></i>
+                <div>
+                    <span>NexaEase</span>
+                    <a target="_blank" href="/">View Site</a>
+                </div>
+            </div>
+            <nav class="sidebar-nav">
+                <ul>
+                    <li>
+                        <a href="/admin"><i class="fas fa-tachometer-alt"></i> <span>Dashboard</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/products"><i class="fas fa-shopping-bag"></i> <span>Products</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/orders"><i class="fas fa-receipt"></i> <span>Orders</span></a>
+                    </li>
+                    <li class="active">
+                        <a href="/admin/contacts"><i class="fas fa-message"></i> <span>Contacts</span></a>
+                    </li>
+                    <li>
+                        <a href="/admin/customers"><i class="fas fa-users"></i> <span>Customers</span></a>
+                    </li>
+                    <li>
+                        <a href="#"><i class="fas fa-cog"></i> <span>Settings</span></a>
+                    </li>
+                </ul>
+            </nav>
+            <div class="sidebar-footer">
+                <div class="user-profile">
+                    <div>
+                        <span class="username">Logout</span>
+                    </div>
+                    <i class="fas fa-sign-out"></i>
+                </div>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <header class="main-header">
+                <div class="header-left">
+                    <h1>Contact Forms</h1>
+                </div>
+                <div class="header-right">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-contacts" placeholder="Search contacts..." />
+                    </div>
+                    <div class="quick-actions">
+                        <button class="btn btn-primary" id="export-contacts">
+                            <i class="fas fa-download"></i> Export
+                        </button>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Contacts Filters -->
+            <section class="filters-section">
+                <div class="filter-group">
+                    <label>Date Range</label>
+                    <select id="filter-date">
+                        <option value="all">All Time</option>
+                        <option value="today">Today</option>
+                        <option value="yesterday">Yesterday</option>
+                        <option value="week">Last 7 Days</option>
+                        <option value="month">Last 30 Days</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <label>User Type</label>
+                    <select id="filter-user-type">
+                        <option value="all">All Users</option>
+                        <option value="registered">Registered Users</option>
+                        <option value="guest">Guest Users</option>
+                    </select>
+                </div>
+                <button class="btn btn-text" id="reset-filters">
+                    <i class="fas fa-sync-alt"></i> Reset
+                </button>
+            </section>
+
+            <!-- Contacts Table -->
+            <section class="contacts-table-section">
+                <div class="card">
+                    <div class="card-header">
+                        <h3>Contact Submissions</h3>
+                        <span id="contacts-count">Loading...</span>
+                    </div>
+                    <div id="loading-overlay" class="div-loader">
+                        <span class="loader"></span>
+                    </div>
+                    <div id="contacts-table-div" class="card-body" style="display: none;">
+                        <table class="contacts-table">
+                            <thead>
+                                <tr>
+                                    <th>Msg(s)</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Phone</th>
+                                    <th>Last Submitted</th>
+                                    <th>Type</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="contacts-table-body"></tbody>
+                        </table>
+                    </div>
+                    <div class="card-footer">
+                        <div class="pagination">
+                            <button id="prev-page" disabled><i class="fas fa-chevron-left"></i></button>
+                            <span id="page-info">Page 1 of 1</span>
+                            <button id="next-page" disabled><i class="fas fa-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Contact Details Modal -->
+            <div id="contact-modal" class="modal">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h3 id="modal-contact-name">Contact Details</h3>
+                        <button class="close-modal">&times;</button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="contact-info">
+                            <div class="info-row">
+                                <span class="info-label">Email:</span>
+                                <span id="modal-contact-email" class="info-value"></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Phone:</span>
+                                <span id="modal-contact-phone" class="info-value"></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">User Type:</span>
+                                <span id="modal-contact-type" class="info-value"></span>
+                            </div>
+                            <div class="info-row">
+                                <span class="info-label">Total Messages:</span>
+                                <span id="modal-contact-count" class="info-value"></span>
+                            </div>
+                        </div>
+
+                        <div class="messages-container">
+                            <h4>Messages</h4>
+                            <div id="contact-messages-list" class="messages-list"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="/assets/admin/js/components/loader.js"></script>
+    <script src="/assets/admin/js/components/notifier.js"></script>
+    <script src="/assets/admin/js/contacts.js"></script>
+</body>
+
+</html>
